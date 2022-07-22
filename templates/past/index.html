@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
+    <script type="text/javascript">
+      session_id = "{{session_id}}";
+    </script>
+    <script>
+      const handleOptionChange = async (value) => {
+        if (!value) return;
+        await $.get(`/show?session_id=${value}`);
+        console.log({ value });
+        const image_data = `<img id="dynamic_image" style="width: 720px; height: 480px" src="{{ url_for('static',filename='images/${value}.png') }}" alt="my plot" />`;
+        console.log({ image_data });
+        $("#dynamic_image").remove();
+        $("#dynamic_content").append(image_data);
+      };
+    </script>
+  </head>
+  <body>
+    <div
+      style="
+        display: flex;
+        background: black;
+        height: 48px;
+        flex-direction: row;
+        align-content: center;
+        padding: 0px 32px;
+      "
+    >
+      <span style="height: 24px; align-self: center" class="site-logo">
+        <a href="/" class="font-weight-bold text-white">Expressio</a>
+      </span>
+      <div></div>
+    </div>
+    <div
+      style="
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+        width: 100vw;
+        height: calc(100vh - 72px);
+      "
+    >
+      <div style="align-self: center">
+        <h4>List of sessions</h4>
+        <select
+          onchange="handleOptionChange(value)"
+          name="option"
+          width="300px"
+        >
+          <option value="" selected>Select Session</option>
+          {% for o in list %}
+          <option value="{{ o.value }}">{{ o.label }}</option>
+          {% endfor %}
+        </select>
+        <div id="dynamic_content">
+          <h4 id="session-name">Showing Session</h4>
+        </div>
+      </div>
+    </div>
+    <script src="{{ url_for('static',filename='js/jquery-3.3.1.min.js') }}"></script>
+  </body>
+</html>
