@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
+    <script type="text/javascript">
+      session_id = "{{session_id}}";
+    </script>
+    <script src="{{ url_for('static',filename='js/product.js') }}"></script>
+  </head>
+  <body>
+    <div
+      style="
+        display: flex;
+        background: black;
+        height: 48px;
+        flex-direction: row;
+        align-content: center;
+        padding: 0px 32px;
+      "
+    >
+      <span style="height: 24px; align-self: center" class="site-logo">
+        <a href="/" class="font-weight-bold text-white">Expressio</a>
+      </span>
+      <div></div>
+    </div>
+    <div
+      style="
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+        width: 100vw;
+        height: calc(100vh - 72px);
+      "
+    >
+      <div style="width: 420px; align-self: center">
+        <form>
+          <!-- Email input -->
+          <div class="form-outline mb-4">
+            <label class="form-label" for="session_name"
+              ><b>Session Name</b></label
+            >
+            <input
+              placeholder="Input session Name"
+              type="text"
+              id="session_name"
+              class="form-control"
+              required
+            />
+          </div>
+          <!-- Submit button -->
+          <button
+            type="button"
+            onclick="startSession()"
+            class="btn btn-primary btn-block mb-4"
+          >
+            Start Session
+          </button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

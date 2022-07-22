@@ -1,0 +1,17 @@
+{
+  "emotions": {
+    "Angry": 7,
+    "Disgust": 0,
+    "Fear": 3,
+    "Happy": 230,
+    "Neutral": 47,
+    "Sad": 4,
+    "Surprise": 27
+  },
+  "gender": {
+    "male": 284,
+    "female": 34
+  },
+  "session_id": "EpiBC5vkSt2JzjZmi-WEuV",
+  "session_name": "Thor love and thunder session 2"
+}
