@@ -9,7 +9,6 @@ import uuid
 import json
 import matplotlib
 matplotlib.use('Agg')
-import matplotlib.pyplot as plt
 import os
 
 # get a UUID - URL safe, Base64
@@ -74,10 +73,12 @@ def process_emotion_data(data):
         results[key] = values[index]/total * 100
     return {"emotions": results, "gender": gender, "session_name":session_name }
 
-def show_graph():
+def show_graph(file_path='static/json/emotion.json'):
+    import matplotlib.pyplot as plt
     # creating the dataset
-    json_data = read_json()
+    json_data = read_json(file_path)
     data = process_emotion_data(json_data)
+    session_id = json_data['session_id']
     gender = data['gender']
     keys = list(data['emotions'].keys())
     values = list(data['emotions'].values())
@@ -90,6 +91,7 @@ def show_graph():
     plt.xlabel("Emotions")
     plt.ylabel("Frequency (%)")
     plt.title("Emotions Capture of " + "(" + gender + ")")
+    plt.savefig('static/images/'+session_id+'.png')
     plt.savefig('static/images/result.png')
     return session_name
 
@@ -127,15 +129,16 @@ def begin_prediction(frame):
 
 def generate_results_list():
     directory = 'static/json/results'
-    result_list = {}
+    result_list = []
     for index, filename in enumerate(os.listdir(directory)):
         file_path = os.path.join(directory, filename)
         json_data = read_json(file_path)
+        session_object = {}
         session_id = json_data['session_id']
         session_name = json_data['session_name']
-        result_list[str(index)] = {}
-        result_list[str(index)]['label'] = session_name
-        result_list[str(index)]['value'] = session_id
+        session_object['label'] = session_name
+        session_object['value'] = session_id
+        result_list.append(session_object)
     return result_list
             
 
@@ -176,6 +179,14 @@ def test():
     print(session_name)
     return session_name
 
+@app.route('/show')
+def show():
+    session_id = request.args.get('session_id')
+    path = 'static/json/results/' + session_id + '.json'
+    print("Show graph with path: " + path)
+    show_graph(file_path=path)
+    return 'OK'
+
 @app.route('/')
 def menu():
     return render_template('test/index.html')
@@ -205,11 +216,11 @@ def saveResults():
 @app.route('/view-past')
 def viewAll():
     list = generate_results_list()
-    return '<div>Test</div>'
+    return render_template('past/index.html', list=list)
 
 @app.route("/results")
 def results():
-    session_name = str(show_graph())
+    session_name = str(show_graph(file_path='static/json/emotion.json'))
     return render_template('results/index.html', session_name=session_name)
 
 if __name__ == '__main__':

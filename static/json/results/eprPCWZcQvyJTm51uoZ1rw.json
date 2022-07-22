@@ -1,0 +1,17 @@
+{
+    "emotions": {
+        "Angry": 0,
+        "Disgust": 0,
+        "Fear": 0,
+        "Happy": 22,
+        "Neutral": 4,
+        "Sad": 0,
+        "Surprise": 0
+    },
+    "gender": {
+        "male": 24,
+        "female": 2
+    },
+    "session_id": "eprPCWZcQvyJTm51uoZ1rw",
+    "session_name": "Test123"
+}
